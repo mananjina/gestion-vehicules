@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<table>
+<center><h1 style="color: red;">GESTION DES VEHICULES DE MANANJINA</H1></center>
+
+
+<center><img src="{{ url_for('static', filename='images/njina.jpg') }}" 
+     alt="Photo Njina" width="250"></center>
+</table>
+
+
+
+<header>
+    <h1 style= color:" red";>Tableau de bord</h1>
+
+    <nav>
+        <a href="{{ url_for('dashboard') }}">Accueil</a>
+        <a href="{{ url_for('add_finance_form') }}">Ajouter finance</a>
+        <a href="{{ url_for('add_entretien_form') }}">Ajouter entretien</a>
+        <a href="{{ url_for('export_excel') }}">Export Excel</a>
+        <a href="{{ url_for('export_csv') }}">Export CSV</a>
+        <a href="{{ url_for('logout') }}">Déconnexion</a>
+    </nav>
+</header>
+
+<hr>
+
+<!-- 🔥 Alertes entretiens expirés -->
+{% if alerts %}
+<div class="alert-box">
+    <h3>⚠️ Alertes entretien</h3>
+    <ul>
+    {% for a in alerts %}
+        <li>{{ a }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<!-- 🔥 Totaux finance -->
+<div class="totaux">
+    <p><strong>Total versement :</strong> {{ totals.versement }} Ar</p>
+    <p><strong>Total dépense :</strong> {{ totals.depense }} Ar</p>
+    <p><strong>Reste :</strong> {{ totals.reste }} Ar</p>
+</div>
+
+<hr>
+
+<!-- 🔍 Barre de recherche -->
+<form method="get" action="{{ url_for('dashboard') }}">
+    <input type="text" name="search" placeholder="Rechercher..." value="{{ search }}">
+    <button type="submit">Rechercher</button>
+</form>
+
+<hr>
+
+<!-- 📌 Tableau Finance -->
+<h2>Finance</h2>
+<table border="1" width="100%">
+    <tr>
+        <th>ID</th>
+        <th>Matricule</th>
+        <th>Date</th>
+        <th>Désignation</th>
+        <th>Versement</th>
+        <th>Dépense</th>
+        {% if role == 'admin' %}
+        <th>Actions</th>
+        {% endif %}
+    </tr>
+
+    {% for f in finances %}
+    <tr>
+        <td>{{ f.id }}</td>
+        <td>{{ f.matricule }}</td>
+        <td>{{ f.date }}</td>
+        <td>{{ f.designation }}</td>
+        <td>{{ f.versement }}</td>
+        <td>{{ f.depense }}</td>
+
+        {% if role == 'admin' %}
+        <td>
+            <a href="{{ url_for('edit_finance', id=f.id) }}">Modifier</a> |
+            <a href="{{ url_for('delete_finance', id=f.id) }}" onclick="return confirm('Supprimer ?')">Supprimer</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+
+<hr>
+
+<!-- 📌 Tableau Entretiens -->
+<h2>Entretiens</h2>
+<table border="1" width="100%">
+    <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Date échéance</th>
+        {% if role == 'admin' %}
+        <th>Actions</th>
+        {% endif %}
+    </tr>
+
+    {% for e in entretiens %}
+    <tr>
+        <td>{{ e.id }}</td>
+        <td>{{ e.type }}</td>
+        <td>{{ e.date_echeance }}</td>
+
+        {% if role == 'admin' %}
+        <td>
+            <a href="{{ url_for('edit_entretien', id=e.id) }}">Modifier</a> |
+            <a href="{{ url_for('delete_entretien', id=e.id) }}" onclick="return confirm('Supprimer ?')">Supprimer</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

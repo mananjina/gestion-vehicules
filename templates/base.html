@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>GESTION DES VEHICULES DE MANANJINA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; }
+        .container { width:90%; margin:auto; padding:10px; }
+        table { width:100%; border-collapse: collapse; margin-bottom:10px;}
+        th, td { border:1px solid #ccc; padding:8px; text-align:left; }
+        th { background:#eee; }
+        .btn { padding:5px 10px; text-decoration:none; border:1px solid #444; border-radius:4px; margin-right:3px; }
+        .btn-danger { background:red; color:white; }
+        .btn-success { background:green; color:white; }
+        .btn-warning { background:orange; color:white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    {% if session.user_id %}
+        <p>Connecté comme <b>{{ session.role }}</b> | <a href="{{ url_for('logout') }}">Déconnexion</a></p>
+    {% endif %}
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

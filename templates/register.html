@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Inscription</h2>
+
+<form method="post" action="{{ url_for('register') }}">
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <label for="username">Nom d'utilisateur :</label><br>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">Mot de passe :</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <!-- Rôle caché, tout nouvel utilisateur sera client -->
+    <input type="hidden" name="role" value="client">
+
+    <button type="submit">S'inscrire</button>
+</form>
+
+<p>Vous avez déjà un compte ? <a href="{{ url_for('login') }}">Se connecter</a></p>
+{% endblock %}

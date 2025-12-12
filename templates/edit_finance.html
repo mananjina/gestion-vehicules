@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Modifier Finance</h2>
+
+<form action="{{ url_for('edit_finance', id=f['id']) }}" method="POST">
+    <label>Matricule :</label>
+    <input type="text" name="matricule" value="{{ f['matricule'] }}" required>
+
+    <label>Date :</label>
+    <input type="text" name="date" value="{{ f['date'] }}" required>
+
+    <label>Désignation :</label>
+    <input type="text" name="designation" value="{{ f['designation'] }}" required>
+
+    <label>Versement :</label>
+    <input type="number" step="0.01" name="versement" value="{{ f['versement'] }}">
+
+    <label>Dépense :</label>
+    <input type="number" step="0.01" name="depense" value="{{ f['depense'] }}">
+
+    <button type="submit">Enregistrer</button>
+</form>
+
+<a href="{{ url_for('dashboard') }}" class="btn-back">Retour</a>
+{% endblock %}

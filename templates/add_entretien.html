@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Ajouter Entretien</h2>
+
+<form action="{{ url_for('add_entretien') }}" method="POST">
+    <label>Type d'entretien :</label>
+    <input type="text" name="type" required>
+
+    <label>Date d'échéance :</label>
+    <input type="text" name="date_echeance" placeholder="JJ-MM-AAAA" required>
+
+    <button type="submit">Ajouter</button>
+</form>
+
+<a href="{{ url_for('dashboard') }}" class="btn-back">Retour</a>
+{% endblock %}

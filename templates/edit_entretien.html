@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Modifier Entretien</h2>
+
+<form action="{{ url_for('edit_entretien', id=e['id']) }}" method="POST">
+    <label>Type d'entretien :</label>
+    <input type="text" name="type" value="{{ e['type'] }}" required>
+
+    <label>Date d'échéance :</label>
+    <input type="text" name="date_echeance" value="{{ e['date_echeance'] }}" required>
+
+    <button type="submit">Enregistrer</button>
+</form>
+
+<a href="{{ url_for('dashboard') }}" class="btn-back">Retour</a>
+{% endblock %}
